@@ -1,70 +1,94 @@
 public abstract class Transport {
-    final private String brand;
-    final private String model;
-    final private int yearOut;
-    final private String country;
+    private String brand;
+    private String model;
+    private Integer productionYear;
+    private String productionCountry;
     private String color;
-    private int speedMax;
+    private int maxSpeed;
 
-    protected abstract void refill(Boolean gasoline, Boolean diesel, Boolean electro);
+    private String typeMotor; // 1 - бензин, 2 - дизель, 3 - электрокар
 
-    public void setColor(String color) {
-        if (color != null) {
-            this.color = color;
-        } else {
-            this.color = "Цвет не указан";
+    public Transport(String brand, String model, Integer productionYear, String productionCountry, String color, int maxSpeed, String typeMotor) {
+        if (brand == null || brand.isBlank() || brand.isEmpty()) {
+            this.brand = "default";
+            return;
         }
-    }
-
-    public void setColor(int speedMax) {
-        if (speedMax <= 0) {
-            this.speedMax = -1;
-        } else {
-            this.speedMax = speedMax;
-        }
-    }
-
-    protected Transport(String brand, String model, int yearOut, String country, String color, int speedMax) {
         this.brand = brand;
+
+        if (model == null || model.isEmpty() || model.isBlank()) {
+            this.model = "default";
+            return;
+        }
         this.model = model;
-        this.yearOut = yearOut;
-        this.country = country;
-        this.color = color;
-        this.speedMax = speedMax;
+
+        if (productionYear <= 0) {
+            this.productionYear = 2000;
+            return;
+        }
+        this.productionYear = productionYear;
+
+        if (productionCountry == null || productionCountry.isBlank() || productionCountry.isEmpty()) {
+            this.productionCountry = "default";
+            return;
+        }
+        this.productionCountry = productionCountry;
+        if (typeMotor == null || typeMotor.isBlank() || typeMotor.isEmpty()){
+            this.typeMotor = "default";
+            return;
+        }
+        this.typeMotor = typeMotor;
+
+        setColor(color);
+        setMaxSpeed(maxSpeed);
     }
+
+    public Transport(String brand, String model, int yearOut, String country, String color, int speedMax) {
+    }
+
+    public abstract void refill(String typeMotor);
 
     public String getBrand() {
         return brand;
     }
-
     public String getModel() {
         return model;
     }
-
-    public int getYearOut() {
-        return yearOut;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
     public String getColor() {
         return color;
     }
-
-    public int getSpeedMax() {
-        return speedMax;
+    public Integer getProductionYear() {
+        return productionYear;
+    }
+    public String getProductionCountry() {
+        return productionCountry;
     }
 
-
-    public String toString() {
-        return "brand='" + brand + '\'' +
-                ",model='" + model + '\'' +
-                ",yearOut='" + yearOut + '\'' +
-                ",country='" + country + '\'' +
-                ",color='" + color + '\'' +
-                ",speedMax=" + speedMax +
-                '}';
+    public int getMaxSpeed() {
+        return maxSpeed;
     }
+    public void setColor(String color) {
+        if (color == null || color.isEmpty() || color.isBlank()) {
+            this.color = "белый";
+            return;
+        }
+        this.color = color;
+    }
+
+    public void setMaxSpeed(int maxSpeed) {
+        if (maxSpeed < 0) {
+            this.maxSpeed = Math.abs(maxSpeed);
+            return;
+        }
+        this.maxSpeed = maxSpeed;
+    }
+
+    public String getTypeMotor() {
+        return typeMotor;
+    }
+
+    public void setTypeMotor(String typeMotor) {
+        this.typeMotor = typeMotor;
+    }
+
+    protected abstract void refill(Boolean gasoline, Boolean diesel, Boolean electro);
 }

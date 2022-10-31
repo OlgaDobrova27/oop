@@ -1,4 +1,4 @@
-public class Car extends Transport {
+public abstract class Car extends Transport {
     private String statusRefill;
     private final float engineVolume;
 
